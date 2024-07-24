@@ -1,0 +1,32 @@
+body {
+  background-color: whitesmoke;
+  color: rgb(255, 255, 255);
+}
+form {
+  display: flex;
+  font-family: cursive;
+
+  flex-direction: column;
+  justify-content: space-between;
+  height: 150px;
+}
+input {
+  height: 30px;
+}
+button {
+  height: 30px;
+  background-color: rgb(27, 168, 255);
+  font-size: 16px;
+}
+
+.div {
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.card {
+  border: 1px solid black;
+  width: 300px;
+  text-align: center;
+}

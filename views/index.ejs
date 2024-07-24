@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/style/example.css" />
+  </head>
+  <body>
+    <form action="/" method="post">
+      <input
+        type="text"
+        required
+        placeholder="Enter the Title"
+        name="title"
+        class="title"
+        value=""
+      />
+      <input
+        type="text"
+        required
+        placeholder="description"
+        name="description"
+        class="description"
+        value=""
+      />
+      <input
+        type="text"
+        required
+        placeholder="Author"
+        name="author"
+        class="author"
+        value=""
+      />
+
+      <button type="submit">submit</button>
+    </form>
+    <hr />
+    <div class="div"></div>
+
+    <script>
+      let cardscontent;
+      const div = document.querySelector(".div");
+      fetch("/home")
+        .then((res) => res.json())
+        .then((data) => {
+          cardscontent = data;
+          console.log(cardscontent);
+          cardscontent.map((element) => {
+            const cardDiv = document.createElement("div"); // Create a container div for each card
+            const BUTTON = document.createElement("button"); // Create a container div for each card
+
+            cardDiv.classList.add("card"); // Optional: Add a class to style each card if needed
+            BUTTON.classList.add(`${element._id}`);
+
+            const h1 = document.createElement("h1");
+            const h3 = document.createElement("h3");
+            const h5 = document.createElement("h5");
+
+            h1.innerText = element.title;
+            h3.innerText = element.description;
+            h5.innerText = element.author;
+            BUTTON.innerText = "delete";
+
+            cardDiv.appendChild(h1);
+            cardDiv.appendChild(h3);
+            cardDiv.appendChild(h5);
+            cardDiv.appendChild(BUTTON);
+
+            cardDiv.style.backgroundColor = calculate();
+
+            div.appendChild(cardDiv); // Append the card div to the main div
+
+            BUTTON.addEventListener("click", () => {
+              fetch("/", {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ _id: element._id }),
+              }).then((res) => {});
+            });
+          });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+      function calculate() {
+        const colorindex = Math.floor(Math.random() * 5);
+        let color = [
+          "lightgreen",
+          "pink",
+          "lightyellow",
+          "skyblue",
+          "lightred",
+          "brown",
+        ];
+        return color[colorindex];
+      }
+    </script>
+  </body>
+</html>
